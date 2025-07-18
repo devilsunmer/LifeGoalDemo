@@ -14,15 +14,18 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
 
 public class ModelUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final ButtonGroup chance = new ButtonGroup();
-	ModelButton chooseFirst;
 	private final ButtonGroup marrigeGroup = new ButtonGroup();
 	private final ButtonGroup houseGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextField likeThingName;
+	private JTextField likeThingPayMoney;
 
 	/**
 	 * Launch the application.
@@ -63,32 +66,32 @@ public class ModelUI extends JFrame {
 		rdbtnNewRadioButton_3.setBounds(6, 81, 107, 23);
 		basic.add(rdbtnNewRadioButton_3);
 		
-		JPanel secondChoose = new JPanel();
-		secondChoose.setBounds(224, 10, 200, 124);
-		contentPane.add(secondChoose);
-		secondChoose.setLayout(null);
+		JPanel marrigeChoose = new JPanel();
+		marrigeChoose.setBounds(224, 10, 200, 124);
+		contentPane.add(marrigeChoose);
+		marrigeChoose.setLayout(null);
 		
 		JRadioButton wishKid = new JRadioButton("預計生子");
 		marrigeGroup.add(wishKid);
 		wishKid.setFont(new Font("標楷體", Font.PLAIN, 14));
 		wishKid.setBounds(6, 6, 107, 23);
-		secondChoose.add(wishKid);
+		marrigeChoose.add(wishKid);
 		
 		JRadioButton noneChild = new JRadioButton("不育");
 		marrigeGroup.add(noneChild);
 		noneChild.setFont(new Font("標楷體", Font.PLAIN, 14));
 		noneChild.setBounds(6, 31, 107, 23);
-		secondChoose.add(noneChild);
+		marrigeChoose.add(noneChild);
 		
 		JRadioButton noneWedding = new JRadioButton("裸婚");
 		marrigeGroup.add(noneWedding);
 		noneWedding.setFont(new Font("標楷體", Font.PLAIN, 14));
 		noneWedding.setBounds(6, 56, 107, 23);
-		secondChoose.add(noneWedding);
+		marrigeChoose.add(noneWedding);
 		
 		JSpinner kid = new JSpinner();
 		kid.setBounds(119, 4, 30, 22);
-		secondChoose.add(kid);
+		marrigeChoose.add(kid);
 		kid.setForeground(new Color(128, 128, 128));
 		kid.setBackground(new Color(192, 192, 192));
 		kid.setFont(new Font("微软雅黑", Font.BOLD, 12));
@@ -97,25 +100,27 @@ public class ModelUI extends JFrame {
 		JLabel kidUnit = new JLabel("個");
 		kidUnit.setFont(new Font("標楷體", Font.PLAIN, 14));
 		kidUnit.setBounds(160, 10, 30, 15);
-		secondChoose.add(kidUnit);
+		marrigeChoose.add(kidUnit);
 		
-		JRadioButton richHouse = new JRadioButton("高級住宅");
-		houseGroup.add(richHouse);
-		richHouse.setBounds(6, 56, 123, 23);
-		secondChoose.add(richHouse);
-		richHouse.setFont(new Font("標楷體", Font.PLAIN, 14));
-		
-		JRadioButton familyHouse = new JRadioButton("2~3房");
-		houseGroup.add(familyHouse);
-		familyHouse.setBounds(6, 31, 107, 23);
-		secondChoose.add(familyHouse);
-		familyHouse.setFont(new Font("標楷體", Font.PLAIN, 14));
+		JPanel houseChoose = new JPanel();
+		houseChoose.setBounds(224, 144, 200, 124);
+		contentPane.add(houseChoose);
+		houseChoose.setLayout(null);
 		
 		JRadioButton simpleHouse = new JRadioButton("一房一廳");
-		houseGroup.add(simpleHouse);
-		simpleHouse.setBounds(6, 6, 107, 23);
-		secondChoose.add(simpleHouse);
 		simpleHouse.setFont(new Font("標楷體", Font.PLAIN, 14));
+		simpleHouse.setBounds(6, 6, 107, 23);
+		houseChoose.add(simpleHouse);
+		
+		JRadioButton familyHouse = new JRadioButton("多房家庭");
+		familyHouse.setFont(new Font("標楷體", Font.PLAIN, 14));
+		familyHouse.setBounds(6, 31, 107, 23);
+		houseChoose.add(familyHouse);
+		
+		JRadioButton richHouse = new JRadioButton("高級公寓");
+		richHouse.setFont(new Font("標楷體", Font.PLAIN, 14));
+		richHouse.setBounds(6, 56, 107, 23);
+		houseChoose.add(richHouse);
 		
 		/*************按鈕設計**************/
 		/**模式選擇*/
@@ -130,6 +135,7 @@ public class ModelUI extends JFrame {
 		JRadioButton marrige = new JRadioButton("結婚基金");
 		marrige.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ModelButton chooseFirst=new ModelButton();
 				chooseFirst.marrigeOption(true, kidUnit, kid, marrige, marrige, marrige);
 				chooseFirst.houseOption(false, simpleHouse, familyHouse, richHouse);
 				
@@ -149,6 +155,7 @@ public class ModelUI extends JFrame {
 		JRadioButton house = new JRadioButton("買房基金");
 		house.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ModelButton chooseFirst=new ModelButton();
 				chooseFirst.marrigeOption(false, kidUnit, kid, marrige, marrige, marrige);
 				chooseFirst.houseOption(true, simpleHouse, familyHouse, richHouse);
 				
@@ -163,18 +170,46 @@ public class ModelUI extends JFrame {
 		 * 這個是選擇以物品為目標模式的時候，設定部分
 		 * 用String來設計主要目標的金額以及各項指標
 		 */
-		JRadioButton likething = new JRadioButton("變成喜歡的東西");
-		likething.addActionListener(new ActionListener() {
+		JRadioButton likeThing = new JRadioButton("變成喜歡的東西");
+		likeThing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ModelButton chooseFirst=new ModelButton();
 				chooseFirst.marrigeOption(false, kidUnit, kid, marrige, marrige, marrige);
 				chooseFirst.houseOption(false, simpleHouse, familyHouse, richHouse);
 				
 			}
 		});
-		likething.setFont(new Font("標楷體", Font.PLAIN, 14));
-		chance.add(likething);
-		likething.setBounds(6, 56, 123, 23);
-		basic.add(likething);
+		likeThing.setFont(new Font("標楷體", Font.PLAIN, 14));
+		chance.add(likeThing);
+		likeThing.setBounds(6, 56, 123, 23);
+		basic.add(likeThing);
+		
+		JPanel likeThingChoose = new JPanel();
+		likeThingChoose.setLayout(null);
+		likeThingChoose.setBounds(14, 144, 200, 124);
+		contentPane.add(likeThingChoose);
+		
+		JLabel likeThingTitle = new JLabel("想存錢購買的東西：");
+		likeThingTitle.setFont(new Font("標楷體", Font.PLAIN, 14));
+		likeThingTitle.setBounds(10, 10, 139, 25);
+		likeThingChoose.add(likeThingTitle);
+		
+		likeThingName = new JTextField();
+		likeThingName.setColumns(10);
+		likeThingName.setBounds(10, 33, 139, 25);
+		likeThingChoose.add(likeThingName);
+		
+		likeThingPayMoney = new JTextField();
+		likeThingPayMoney.setColumns(10);
+		likeThingPayMoney.setBounds(10, 89, 139, 25);
+		likeThingChoose.add(likeThingPayMoney);
+		
+		JLabel likeThingPay = new JLabel("金額預估：");
+		likeThingPay.setFont(new Font("標楷體", Font.PLAIN, 14));
+		likeThingPay.setBounds(10, 64, 139, 25);
+		likeThingChoose.add(likeThingPay);
+		
+		
 		
 		
 		
